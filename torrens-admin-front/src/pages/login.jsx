@@ -17,11 +17,11 @@ function Login(props) {
   };
   const iniciarSesion = async (user, password) => {
     const res = await axios
-      .post("localhost:3001/api/user/login", {
+      .post("http://localhost:3001/api/user/login", {
         email: user,
         password: password,
       })
-      .then((obj) => console.log(obj.data));
+      .then((obj) => console.log(obj.data.data.token));
   };
   const submitHandler = (e) => {
     e.preventDefault();

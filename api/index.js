@@ -15,19 +15,20 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
 //Configuracion de cors
-var corsOptions = {
-  origin: "*",
-  credentials: true,
-  methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-  allowedHeaders: [
-    "Origin",
-    "X-Requested-With",
-    "Content-Type",
-    "Accept",
-    "authorization",
-  ],
-};
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "authorization",
+    ],
+  })
+);
 
 // Conexión a Base de datos
 const uri = `mongodb+srv://api-tua:${process.env.PASSWORD}@cluster0.3wzqn.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`;

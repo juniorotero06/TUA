@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 //esquema de validaciones
 const schemaRegister = Joi.object({
   name: Joi.string().min(6).max(255).required(),
+  lastname: Joi.string().min(6).max(255).required(),
   email: Joi.string().min(6).max(255).required().email(),
   password: Joi.string()
     .min(7)
@@ -40,10 +41,12 @@ router.post("/login", async (req, res) => {
   const token = jwt.sign(
     {
       name: user.name,
+      lastname: user.lastname,
       id: user._id,
       isAdmin: user.isAdmin,
     },
-    process.env.TOKEN_SECRET
+    process.env.TOKEN_SECRET,
+    { expiresIn: "2h" }
   );
 
   res.header("auth-token", token).json({
@@ -73,6 +76,7 @@ router.post("/register", async (req, res) => {
   //Creando el nuevo usario
   const user = new User({
     name: req.body.name,
+    lastname: req.body.lastname,
     email: req.body.email,
     password,
     isAdmin: req.body.isAdmin,

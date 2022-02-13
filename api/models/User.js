@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 const userSchema = mongoose.Schema({
   name: {
@@ -13,6 +14,10 @@ const userSchema = mongoose.Schema({
     min: 6,
     max: 255,
   },
+  phone: {
+    type: Number,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -24,6 +29,10 @@ const userSchema = mongoose.Schema({
     required: true,
     minlength: 7,
   },
+  state: {
+    type: Boolean,
+    default: true,
+  },
   isAdmin: {
     type: Boolean,
     default: false,
@@ -33,5 +42,7 @@ const userSchema = mongoose.Schema({
     default: Date.now,
   },
 });
+
+userSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("User", userSchema);

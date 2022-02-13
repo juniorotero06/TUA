@@ -2,7 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
-const authRoutes = require("./routes/auth");
+const Routes = require("./routes/routes");
 const dasboardRoutes = require("./routes/dashboard");
 const verifyToken = require("./middleware/validate-token");
 const cors = require("cors");
@@ -39,7 +39,7 @@ mongoose
 
 // route middlewares
 app.use("/api/dashboard", verifyToken, dasboardRoutes);
-app.use("/api/user", authRoutes);
+app.use("/api", Routes);
 
 // iniciar server
 const PORT = process.env.PORT || 3001;

@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const Routes = require("./routes/routes");
-const dasboardRoutes = require("./routes/dashboard");
+const auth = require("./routes/auth");
 const verifyToken = require("./middleware/validate-token");
 const cors = require("cors");
 require("dotenv").config();
@@ -38,8 +38,8 @@ mongoose
   .catch((e) => console.log("error db:", e));
 
 // route middlewares
-app.use("/api/dashboard", verifyToken, dasboardRoutes);
-app.use("/api", Routes);
+app.use("/api/auth", auth);
+app.use("/api", verifyToken, Routes);
 
 // iniciar server
 const PORT = process.env.PORT || 3001;

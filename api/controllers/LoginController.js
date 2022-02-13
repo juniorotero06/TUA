@@ -48,11 +48,13 @@ exports.login = async (req, res) => {
     process.env.TOKEN_SECRET,
     { expiresIn: "2h" }
   );
-
-  res.header("auth-token", token).json({
-    error: null,
-    data: { token },
-  });
+  try {
+    res.header("auth-token", token).json({
+      data: { token },
+    });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
 
 exports.register = async (req, res) => {

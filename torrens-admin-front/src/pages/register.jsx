@@ -18,16 +18,34 @@ export function Register(props) {
     });
   };
 
-  const crearUsuario = async (user, password, name, lastname, isAdmin) => {
-    const res = await axios
-      .post("http://localhost:3001/api/user/register", {
-        email: user,
-        password: password,
-        name: name,
-        lastname: lastname,
-        isAdmin: isAdmin,
-      })
-      .catch();
+  const crearUsuario = async (
+    user,
+    password,
+    name,
+    lastname,
+    phone,
+    isAdmin
+  ) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3001/api/auth/register",
+        {
+          email: user,
+          password: password,
+          name: name,
+          lastname: lastname,
+          phone: phone,
+          isAdmin: isAdmin,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const submitHandler = (e) => {
@@ -36,6 +54,7 @@ export function Register(props) {
     const lastname = e.target.idLastame.value;
     const user = e.target.idUsername.value;
     const password = e.target.idPassword.value;
+    const phone = e.target.idPhone.value;
     var cbChecked = document.querySelector(
       '[name="inlineRadioOptions"]:checked'
     );
@@ -45,7 +64,7 @@ export function Register(props) {
     } else {
       isAdmin = true;
     }
-    crearUsuario(user, password, name, lastname, isAdmin);
+    crearUsuario(user, password, name, lastname, phone, isAdmin);
     //history.push("/inicio");
   };
 
@@ -88,6 +107,25 @@ export function Register(props) {
                   id="idLastname"
                   onChange={handleInputChange}
                   value={input.lastname}
+                  aria-describedby="emailHelp"
+                />
+              </div>
+            </div>
+
+            <div className="row g-3 align-items-center">
+              <div className="col-auto">
+                <label htmlFor="exampleInputEmail1" className="form-label">
+                  Telefono
+                </label>
+              </div>
+              <div className="col-sm">
+                <input
+                  type="text"
+                  className={`${error.phone} form-control`}
+                  name="phone"
+                  id="idPhone"
+                  onChange={handleInputChange}
+                  value={input.phone}
                   aria-describedby="emailHelp"
                 />
               </div>

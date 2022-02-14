@@ -1,6 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Switch } from "react-router";
+import { Route, Switch, Redirect } from "react-router";
 
 import Login from "./pages/login";
 import { Register } from "./pages/register";

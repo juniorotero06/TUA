@@ -45,7 +45,7 @@ export const SidebarWrap = styled.div`
 
 export const SidebarLink = styled(Link)`
   display: flex;
-  color: #737170;
+  color: #bfbfbf;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
@@ -65,7 +65,7 @@ export const SidebarLabel = styled.span`
 `;
 
 export const DropdownLink = styled(Link)`
-  background: #414757;
+  background: #bfbfbf;
   height: 60px;
   padding-left: 3rem;
   display: flex;

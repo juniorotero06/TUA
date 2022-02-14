@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { setToken } from "../redux/actions";
 import axios from "axios";
 
 function Login(props) {
@@ -15,14 +17,38 @@ function Login(props) {
       [e.target.name]: e.target.value,
     });
   };
+
   const iniciarSesion = async (user, password) => {
-    const res = await axios
-      .post("http://localhost:3001/api/user/login", {
-        email: user,
-        password: password,
-      })
-      .then((obj) => console.log(obj.data.data.token));
+    try {
+      const res = await axios
+        .post(
+          "http://localhost:3001/api/auth/login",
+          {
+            email: user,
+            password: password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then(async (obj) => {
+          const usuarioDB = await obj.data;
+          props.setToken(usuarioDB.data.token);
+          console.log(props.authToken);
+          localStorage.setItem("token2", usuarioDB.data.token);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const obtenerToken = () => {
+    if (localStorage.getItem("token2")) {
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     const user = e.target.idUsername.value;
@@ -99,4 +125,16 @@ function Login(props) {
   );
 }
 
-export default Login;
+function mapStateToProps(state) {
+  return {
+    authToken: state.authToken,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setToken: (token) => dispatch(setToken(token)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
